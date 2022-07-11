@@ -2,16 +2,14 @@ import pIsPromise from 'p-is-promise'
 
 export type SettleResult<T> =
     | {
-          status: 'fulfilled'
+          status: 'success'
           value: T
       }
     | {
-          status: 'rejected'
+          status: 'error'
           reason: unknown
       }
 
-// the same as https://github.com/sindresorhus/p-reflect but with an API that's more modern by being
-// aligned with Promise.allSettled()
 export default function settle<T>(value: () => T): SettleResult<T>
 export default function settle<T>(value: Promise<T> | (() => Promise<T>)): Promise<SettleResult<T>>
 // eslint-disable-next-line @typescript-eslint/promise-function-async
@@ -27,18 +25,18 @@ export default function settle<T>(
                     unwrappedValue
                         // eslint-disable-next-line promise/prefer-await-to-then
                         .then((value) => {
-                            resolve({ status: 'fulfilled', value })
+                            resolve({ status: 'success', value })
                         })
                         // eslint-disable-next-line promise/prefer-await-to-then
                         .catch((err) => {
-                            resolve({ status: 'rejected', reason: err })
+                            resolve({ status: 'error', reason: err })
                         })
                 )
             })
         }
 
-        return { status: 'fulfilled', value: unwrappedValue }
+        return { status: 'success', value: unwrappedValue }
     } catch (err) {
-        return { status: 'rejected', reason: err }
+        return { status: 'error', reason: err }
     }
 }

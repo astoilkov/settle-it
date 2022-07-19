@@ -69,4 +69,4 @@ return result.value
 
 ## Related
 
-- [good-try – Tries to execute sync/async function, returns a specified default value if the function throws.](https://github.com/astoilkov/good-try) — Similarly to `settle-it` it handles sync/async functions that throw an error. However, it directly returns the value and supports optional fallback value/callback.
+- [good-try](https://github.com/astoilkov/good-try) — Tries to execute sync/async function, returns a specified default value if the function throws. Similarly to `settle-it` it handles sync/async functions that throw an error. However, it directly returns the value and supports optional fallback value/callback.

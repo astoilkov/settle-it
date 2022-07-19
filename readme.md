@@ -29,7 +29,7 @@ if (result.status === 'error') {
 return result.value
 ```
 
-With a asynchronous functions:
+With an asynchronous functions:
 ```ts
 import settle from 'settle-it'
 

@@ -11,8 +11,6 @@
 npm install settle-it
 ```
 
-## Why
-
 ## Usage
 
 With a synchronous function:

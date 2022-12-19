@@ -3,7 +3,7 @@
 > Like `Promise.allSettled()` but for sync and async functions.
 
 [![Gzipped Size](https://img.shields.io/bundlephobia/minzip/settle-it)](https://bundlephobia.com/result?p=settle-it)
-[![Build Status](https://img.shields.io/github/workflow/status/astoilkov/settle-it/CI)](https://github.com/astoilkov/settle-it/actions/workflows/main.yml)
+[![Build Status](https://img.shields.io/github/actions/workflow/status/astoilkov/settle-it/main.yml?branch=main)](https://github.com/astoilkov/settle-it/actions/workflows/main.yml)
 
 ## Install
 

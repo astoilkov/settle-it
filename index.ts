@@ -10,8 +10,8 @@ export type SettleResult<T> =
           reason: unknown
       }
 
-export default function settle<T>(value: () => T): SettleResult<T>
 export default function settle<T>(value: Promise<T> | (() => Promise<T>)): Promise<SettleResult<T>>
+export default function settle<T>(value: () => T): SettleResult<T>
 // eslint-disable-next-line @typescript-eslint/promise-function-async
 export default function settle<T>(
     value: (() => T) | Promise<T> | (() => Promise<T>),

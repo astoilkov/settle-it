@@ -1,6 +1,6 @@
 {
     "name": "settle-it",
-    "version": "1.0.1",
+    "version": "1.1.0",
     "description": "Like Promise.allSettled() but for sync and async functions",
     "license": "MIT",
     "repository": "astoilkov/settle-it",

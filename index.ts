@@ -2,12 +2,12 @@ import pIsPromise from 'p-is-promise'
 
 export type SettleResult<T, D> = [T, undefined] | [D, Error]
 
-type DefaultValue<D> = D | ((err: unknown) => D | void)
+type Fallback<D> = D | ((err: unknown) => D | void)
 
 // promise & default value
 export default function settle<T, K>(
     value: Promise<T> | (() => Promise<T>),
-    defaultValue: DefaultValue<K>,
+    fallback: Fallback<K>,
 ): Promise<SettleResult<T, K>>
 
 // promise
@@ -17,10 +17,7 @@ export default function settle<T>(
 ): Promise<SettleResult<T, undefined>>
 
 // function & default value
-export default function settle<T, D>(
-    value: () => T,
-    defaultValue: DefaultValue<D>,
-): SettleResult<T, D>
+export default function settle<T, D>(value: () => T, fallback: Fallback<D>): SettleResult<T, D>
 
 // function
 export default function settle<T>(
@@ -31,12 +28,12 @@ export default function settle<T>(
 // implementation
 export default function settle<T, D = void>(
     value: (() => T) | Promise<T> | (() => Promise<T>),
-    defaultValue?: DefaultValue<D>,
+    fallback?: Fallback<D>,
 ): SettleResult<T, D> | Promise<SettleResult<T, D>> {
     const getDefaultValue = (err: unknown): D => {
-        return typeof defaultValue === 'function'
-            ? (defaultValue as (err: unknown) => D)(err)
-            : (defaultValue as D)
+        return typeof fallback === 'function'
+            ? (fallback as (err: unknown) => D)(err)
+            : (fallback as D)
     }
 
     try {

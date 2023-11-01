@@ -2,29 +2,29 @@ import settle from './index'
 
 describe('settle-it', () => {
     const cases = [
-        { async: false, error: false, defaultValue: false },
-        { async: false, error: true, defaultValue: false },
-        { async: false, error: false, defaultValue: 'value' },
-        { async: false, error: true, defaultValue: 'value' },
-        { async: false, error: false, defaultValue: 'fn' },
-        { async: false, error: true, defaultValue: 'fn' },
-        { async: 'fn', error: false, defaultValue: false },
-        { async: 'fn', error: true, defaultValue: false },
-        { async: 'fn', error: false, defaultValue: 'value' },
-        { async: 'fn', error: true, defaultValue: 'value' },
-        { async: 'fn', error: false, defaultValue: 'fn' },
-        { async: 'fn', error: true, defaultValue: 'fn' },
-        { async: 'promise', error: false, defaultValue: false },
-        { async: 'promise', error: true, defaultValue: false },
-        { async: 'promise', error: false, defaultValue: 'value' },
-        { async: 'promise', error: true, defaultValue: 'value' },
-        { async: 'promise', error: false, defaultValue: 'fn' },
-        { async: 'promise', error: true, defaultValue: 'fn' },
+        { async: false, error: false, fallback: undefined },
+        { async: false, error: true, fallback: undefined },
+        { async: false, error: false, fallback: 'value' },
+        { async: false, error: true, fallback: 'value' },
+        { async: false, error: false, fallback: 'fn' },
+        { async: false, error: true, fallback: 'fn' },
+        { async: 'fn', error: false, fallback: undefined },
+        { async: 'fn', error: true, fallback: undefined },
+        { async: 'fn', error: false, fallback: 'value' },
+        { async: 'fn', error: true, fallback: 'value' },
+        { async: 'fn', error: false, fallback: 'fn' },
+        { async: 'fn', error: true, fallback: 'fn' },
+        { async: 'promise', error: false, fallback: undefined },
+        { async: 'promise', error: true, fallback: undefined },
+        { async: 'promise', error: false, fallback: 'value' },
+        { async: 'promise', error: true, fallback: 'value' },
+        { async: 'promise', error: false, fallback: 'fn' },
+        { async: 'promise', error: true, fallback: 'fn' },
     ]
 
-    for (const { async, error, defaultValue } of cases) {
-        test(`async: ${async}, error: ${error}, defaultValue: ${defaultValue}`, async () => {
-            const defaultValueSymbol = Symbol('defaultValue')
+    for (const { async, error, fallback } of cases) {
+        test(`async: ${async}, error: ${error}, fallback: ${fallback}`, async () => {
+            const fallbackValue = Symbol('defaultValue')
             const arg1 =
                 async === 'fn'
                     ? async () =>
@@ -41,16 +41,16 @@ describe('settle-it', () => {
                           }
                       }
             const arg2 =
-                defaultValue === false
+                fallback === undefined
                     ? undefined
-                    : defaultValue === 'value'
-                    ? defaultValueSymbol
-                    : () => defaultValueSymbol
+                    : fallback === 'value'
+                    ? fallbackValue
+                    : () => fallbackValue
 
             const result = await settle(arg1 as () => Promise<string>, arg2)
 
             expect(result).toEqual([
-                error ? (defaultValue ? defaultValueSymbol : undefined) : 'success',
+                error ? (fallback ? fallbackValue : undefined) : 'success',
                 error ? new Error('error') : undefined,
             ])
         })

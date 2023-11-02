@@ -15,7 +15,7 @@
     "types": "index.d.ts",
     "sideEffects": false,
     "engines": {
-        "node": ">=12"
+        "node": ">=16"
     },
     "scripts": {
         "build": "tsc",

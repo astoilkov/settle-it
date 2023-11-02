@@ -4,6 +4,15 @@ export type SettleResult<T, F> = [T, undefined] | [F, Error]
 
 type Fallback<F> = F | ((err: Error) => F | void)
 
+// function & default value
+export default function settle<T, F>(value: () => T, fallback: Fallback<F>): SettleResult<T, F>
+
+// function
+export default function settle<T>(
+    //
+    value: () => T,
+): SettleResult<T, undefined>
+
 // promise & default value
 export default function settle<T, F>(
     value: Promise<T> | (() => Promise<T>),
@@ -15,15 +24,6 @@ export default function settle<T>(
     //
     value: Promise<T> | (() => Promise<T>),
 ): Promise<SettleResult<T, undefined>>
-
-// function & default value
-export default function settle<T, F>(value: () => T, fallback: Fallback<F>): SettleResult<T, F>
-
-// function
-export default function settle<T>(
-    //
-    value: () => T,
-): SettleResult<T, undefined>
 
 // implementation
 export default function settle<T, F = void>(

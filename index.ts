@@ -1,6 +1,6 @@
 import pIsPromise from 'p-is-promise'
 
-export type SettleResult<T, D> = [T, undefined] | [D, Error]
+export type SettleResult<T, F> = [T, undefined] | [F, Error]
 
 type Fallback<F> = F | ((err: Error) => F | void)
 

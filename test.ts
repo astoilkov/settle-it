@@ -55,4 +55,32 @@ describe('settle-it', () => {
             ])
         })
     }
+
+    test('throw error as string', () => {
+        const error = 'error'
+        const result = settle(() => {
+            throw error
+        })
+        expect(result).toEqual([undefined, new Error(error)])
+    })
+
+    test('throw object is converted to Error and message is JSON.stringify()', () => {
+        const error = { presentableError: 'error' }
+        const result = settle(() => {
+            throw error
+        })
+        expect(result).toEqual([undefined, new Error(JSON.stringify(error))])
+    })
+
+    test(`throw object with circular refs can't be converted using JSON.stringify()`, () => {
+        const error: any = {}
+        error.circular = error
+        const result = settle(() => {
+            throw error
+        })
+        expect(result).toEqual([
+            undefined,
+            new Error(`settle-it failed to convert the thrown object to an Error object`),
+        ])
+    })
 })

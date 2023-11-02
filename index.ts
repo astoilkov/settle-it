@@ -49,7 +49,8 @@ export default function settle<T, D = void>(
                         })
                         // eslint-disable-next-line promise/prefer-await-to-then
                         .catch((err) => {
-                            resolve([getDefaultValue(err), err])
+                            const ensured = ensureError(err)
+                            resolve([getDefaultValue(ensured), ensured])
                         })
                 )
             })
@@ -57,6 +58,21 @@ export default function settle<T, D = void>(
 
         return [unwrappedValue, undefined]
     } catch (err) {
-        return [getDefaultValue(err), err as Error]
+        const ensured = ensureError(err)
+        return [getDefaultValue(ensured), ensured]
+    }
+}
+
+function ensureError(error: unknown): Error {
+    if (error instanceof Error) {
+        return error
+    } else if (typeof error === 'string') {
+        return new Error(error)
+    }
+
+    try {
+        return new Error(JSON.stringify(error))
+    } catch (err) {
+        return new Error(`settle-it failed to convert the thrown object to an Error object`)
     }
 }

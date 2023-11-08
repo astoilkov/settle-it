@@ -1,6 +1,6 @@
 {
     "name": "settle-it",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "Deal with code that can throw",
     "license": "MIT",
     "repository": "astoilkov/settle-it",

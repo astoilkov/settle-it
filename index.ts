@@ -2,7 +2,7 @@ import pIsPromise from 'p-is-promise'
 
 export type SettleResult<T, F> = [T, undefined] | [F, Error]
 
-type Fallback<F> = F | ((err: Error) => F | void)
+type Fallback<F> = F | ((err: Error) => F) | ((err: Error) => void)
 
 // function & default value
 export default function settle<T, F>(value: () => T, fallback: Fallback<F>): SettleResult<T, F>
